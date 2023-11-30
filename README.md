@@ -1,19 +1,19 @@
 # Docker-MySQL-phpMyAdmin
 ## การกำหนด Networks:
-```
+```yml
 networks:
   dev_network:
 ```
 สร้างเครือข่ายเพื่อให้ MySQL และ phpMyAdmin อยู่ใน network เดียวกัน (dev_network) เพื่อให้สามารถเชื่อมต่อระหว่าง containers ได้
 ## การกำหนด Volumes:
-```
+```yml
 volumes:
   icoop_data:
 ```
 กำหนด Volume เพื่อเก็บข้อมูลของ MySQL ภายใน container
 
 ## การกำหนด MySQL Container:
-```
+```yml
 icoop: 
   image: mysql:latest
   container_name: icoop
@@ -37,7 +37,7 @@ icoop:
 * **environment:** กำหนด environment variables เช่น MYSQL_ROOT_PASSWORD และ TZ (time zone)
 * **ports:** กำหนดการเชื่อมโยงพอร์ตเพื่อให้สามารถเข้าถึง MySQL ได้ผ่านพอร์ต 3309 ของเครื่อง Host
 ## การกำหนด phpMyAdmin Container:
-```
+```yml
 phpmyadmin:
   image: phpmyadmin/phpmyadmin
   container_name: myadmin
