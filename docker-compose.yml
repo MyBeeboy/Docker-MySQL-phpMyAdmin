@@ -1,0 +1,41 @@
+version: '3.8'
+
+networks:
+  dev_network:
+
+volumes:
+  icoop_data:
+ 
+
+services:
+  # MySQL
+  icoop:
+    image: mysql:latest
+    container_name: icoop
+    volumes:
+      - icoop_data:/var/lib/mysql
+    restart: always
+    command: mysqld --sql_mode="IGNORE_SPACE" --log_bin_trust_function_creators=1 --low-priority-updates --max_allowed_packet=2G --innodb-buffer-pool-size=200M --net_write_timeout=3600 --net_read_timeout=3600
+    environment:
+      MYSQL_ROOT_PASSWORD: pass123
+      TZ: Asia/Bangkok
+    ports:
+      - '3309:3306'
+    networks:
+      - dev_network
+
+  # phpmyadmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: myadmin
+    restart: always
+    ports:
+      - '8888:80'
+    environment:
+      # PMA_HOST:
+      PMA_ARBITRARY: 1
+      UPLOAD_LIMIT: 50G
+      MEMORY_LIMIT: 50G
+      # MAX_EXECUTION_TIME: 10000
+    networks:
+      - dev_network
